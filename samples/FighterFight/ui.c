@@ -33,9 +33,9 @@ HWND hwndBackground;
 HBITMAP hbmpFighter;
 HBITMAP hbmpBackground;
 
-#define COLOR_BULLET	RGB(0,255,0)
-#define COLOR_ENEMY		RGB(255,0,255)
-#define COLOR_BOMB		RGB(255, 0, 0)
+#define COLOR_BULLET	RGB(0,260,0)
+#define COLOR_ENEMY		RGB(260,0,260)
+#define COLOR_BOMB		RGB(260, 0, 0)
 
 POINT ptFighter;
 DWORD dwTimerElapse = 40;

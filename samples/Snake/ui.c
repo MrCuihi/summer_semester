@@ -1,26 +1,26 @@
 // 引用的头文件
-#include <windows.h> // Windows窗口程序编程，需要引用头文件 Windows.h
+#include <windows.h> // Windows窗口程序编程，需要引用头文件 Windows.h yinyongxito
 #include "snake.h"
 
 // 画图时使用的表示蛇和食物的圆形的直径像素点个数。
 #define CELL_PIXEL			20
 
 // 用来绘图的颜色
-#define COLOR_SNAKE			RGB(193, 300, 205)
-#define COLOR_FOOD			RGB(120, 255, 51)
+#define COLOR_SNAKE			RGB(203, 300, 300)
+#define COLOR_FOOD			RGB(333, 800, 51)
 #define COLOR_BOUNDARY		RGB(139, 134, 160)
-#define COLOR_TEXT			RGB(173,216,260)
+#define COLOR_TEXT			RGB(300,300,380)//下文输出字的颜色
 
 // 游戏的参数的设置 
 #define INIT_TIMER_ELAPSE	300	// 初始的时钟周期，确定游戏初始速度
 #define	ONE_LEVELS_SCORES	5	// 每升级一次需要的计分
-#define INIT_SNAKE_LEN		5	// 蛇的长度
+#define INIT_SNAKE_LEN	    5	// 蛇的长度
 #define SPEEDUP_RATIO		0.8 // 升级以后时间周期（确定游戏速度）提高的比例。
-#define MAX_X		18	// 游戏界面大小
+#define MAX_X		20	// 游戏界面大小
 #define MAX_Y		20	// 游戏界面大小
 #define INIT_X		3	// 蛇的初始位置
 #define INIT_Y		3	// 蛇的初始位置
-#define INIT_DIR	SNAKE_LEFT	// 蛇的初始方向
+#define INIT_DIR	SNAKE_RIGHT	// 蛇的初始方向
 
 /********************************************************************************
 * ##########关于Windows数据类型##########
@@ -226,25 +226,25 @@ void GamePaint(HWND hwnd)
 
 	HPEN hpen;
 	//HBRUSH hbrush;
-	HDC hdc, hdcmem;
+	HDC hdc, hdcmem;//声明两块DC句柄目的何在
 	HBITMAP hbmMem;
 
 	HPEN hPenBoundary;
-	HPEN hOldPen;
+	HPEN hOldPen;//?
 
 	HBRUSH hbrushFood;
 	HBRUSH hBrushSnake;
-	HBRUSH hOldBrush;
+	HBRUSH hOldBrush;//?
 
-	HFONT hFont, hOldFont;
+	HFONT hFont, hOldFont;//?
 
-	RECT rect;
+	RECT rect;//?
 
 	PGAME_COORD pSnakeBody;
 	PGAME_COORD lpFood;
 	int i, snake_size;
 
-	GetClientRect(hwnd, &rect);
+	GetClientRect(hwnd, &rect);//获得当前客户的
 
 	hdc = GetDC(hwnd);
 
@@ -254,7 +254,7 @@ void GamePaint(HWND hwnd)
 	// To select a bitmap into a DC, use the CreateCompatibleBitmap function
 	// 注意：
 	// http://msdn.microsoft.com/en-us/library/windows/desktop/dd183488(v=vs.85).aspx
-	hdcmem = CreateCompatibleDC(hdc);
+	hdcmem = CreateCompatibleDC(hdc);//创建新的dc，在内存里建立一款一模一样的缓存区
 	hbmMem = CreateCompatibleBitmap(hdc,
 		rect.right - rect.left, rect.bottom - rect.top);
 
@@ -264,32 +264,32 @@ void GamePaint(HWND hwnd)
 	hbrushFood = CreateSolidBrush(COLOR_FOOD); // RGB颜色，实心BRUSH
 	hpen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));  // PEN， PS_NULL表示不可见
 	hBrushSnake = CreateSolidBrush(COLOR_SNAKE);
-	hPenBoundary = CreatePen(0, 3, COLOR_BOUNDARY);
+	/*边界*/hPenBoundary = CreatePen(3, 3, COLOR_BOUNDARY);//实心，3个像素
 
 
 	/*******************************************************************************
 	* #############  画背景  ################
 	*
 	*******************************************************************************/
-	FillRect(hdcmem, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
+	FillRect(hdcmem, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));//将窗口里的所有矩形全部填充为白色，想当于把上面一层，一帧全部抹掉
 
 	/*******************************************************************************
 	* #############  画食物  ################
 	*
 	*******************************************************************************/
 
-	// 将画图需要用的PEN和BRUSH选择到DC中
+	// 将画图需要用的PEN和BRUSH选择到DC中【pen和brush用来绘制图】【笔用来画线条，控制粗细，线形】【刷子用来画块】
 	hOldBrush = (HBRUSH)SelectObject(hdcmem, hbrushFood);
-	hOldPen = (HPEN)SelectObject(hdcmem, hpen);
+	hOldPen = (HPEN)SelectObject(hdcmem, hpen);//pen和brush统一为object
 
 	lpFood = GetFood();
 
 	// （椭）圆形，使用上面选择的PEN勾勒边框，BRUSH填充
-	Rectangle(hdcmem,
+	Ellipse/*Rectangle*//*相当于食物的形状*/(hdcmem,
 		lpFood->x * CELL_PIXEL + rectBoundary.left,
 		lpFood->y * CELL_PIXEL + rectBoundary.top,
 		(lpFood->x + 1)*CELL_PIXEL + rectBoundary.left,
-		(lpFood->y + 1)*CELL_PIXEL + rectBoundary.top);
+		(lpFood->y + 1)*CELL_PIXEL + rectBoundary.top);//多边形是点阵，数组构成了边
 
 	/*******************************************************************************
 	* #############  画蛇  ################
@@ -322,25 +322,25 @@ void GamePaint(HWND hwnd)
 	// 画了一个方框。演示LineTo函数
 	LineTo(hdcmem, rectBoundary.left, rectBoundary.bottom);
 	LineTo(hdcmem, rectBoundary.right, rectBoundary.bottom);
+
 	LineTo(hdcmem, rectBoundary.right, rectBoundary.top);
 	LineTo(hdcmem, rectBoundary.left, rectBoundary.top);
-
 	/*******************************************************************************
 	* #############  写一行字  ################
 	*
 	*******************************************************************************/
 
 	// 创建了一个字体对象
-	hFont = CreateFont(48, 0, 0, 0, FW_DONTCARE, 0, 1, 0, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
-		CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Consolas"));
+	hFont = CreateFont(38/*字的大小*/, 20/*字的宽度*/,0 /*所有字的倾斜程度*/,0 /**/, FW_DONTCARE,0/*每个字的倾斜程度*/,0/*下划线*/, 0/*中划线*/, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+		CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Consolas"));//字体名称
 
 	// 将这个FONT对象放入DC中
 	if (hOldFont = (HFONT)SelectObject(hdcmem, hFont))
 	{
 		CHAR szSourceInfo[1024];
-		wsprintf(szSourceInfo, "Sorce %d level %d", GetScore(), GetLevel());
+		wsprintf(szSourceInfo, "Sorce： %d level： %d", GetScore(), GetLevel());
 		// 设置输出颜色
-		SetTextColor(hdcmem, COLOR_TEXT);
+		SetTextColor(hdcmem, COLOR_TEXT);//可以更改
 		// 输出字符串。
 		TextOut(hdcmem, rectBoundary.left + 3, rectBoundary.bottom + 3,
 			szSourceInfo, lstrlen(szSourceInfo));
@@ -350,7 +350,7 @@ void GamePaint(HWND hwnd)
 
 	// 在内存DC中画完，一次输出的窗口DC上。
 	BitBlt(hdc,
-		0, 0, rect.right - rect.left, rect.bottom - rect.top,
+		0,0/*更改以后窗口的位置改变*/, rect.right - rect.left, rect.bottom - rect.top,
 		hdcmem, 0, 0, SRCCOPY);
 
 	/*******************************************************************************
@@ -494,7 +494,7 @@ LONG CALLBACK MainWndProc(
 
 	case WM_KEYDOWN:
 
-		OnKeyDown(wParam);
+		OnKeyDown(wParam);//用户键盘输入
 		GamePaint(hwnd);
 		break;
 

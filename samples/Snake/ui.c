@@ -1,5 +1,5 @@
 // 引用的头文件
-#include <windows.h> // Windows窗口程序编程，需要引用头文件 Windows.h yinyongxito
+#include<windows.h>
 #include "snake.h"
 
 // 画图时使用的表示蛇和食物的圆形的直径像素点个数。
@@ -29,7 +29,7 @@
 * Windows类型都是全大写。
 *
 * DWORD LPSTR WPARAM LPARAM HWND等
-* 其中，以'H'大头的数据类型都是句柄
+* 其中，以'H'打头的数据类型都是句柄
 *
 *******************************************************************************/
 
@@ -226,19 +226,19 @@ void GamePaint(HWND hwnd)
 
 	HPEN hpen;
 	//HBRUSH hbrush;
-	HDC hdc, hdcmem;//声明两块DC句柄目的何在
+	HDC hdc, hdcmem;
 	HBITMAP hbmMem;
 
 	HPEN hPenBoundary;
-	HPEN hOldPen;//?
+	HPEN hOldPen;
 
 	HBRUSH hbrushFood;
 	HBRUSH hBrushSnake;
-	HBRUSH hOldBrush;//?
+	HBRUSH hOldBrush;
 
-	HFONT hFont, hOldFont;//?
+	HFONT hFont, hOldFont;
 
-	RECT rect;//?
+	RECT rect;
 
 	PGAME_COORD pSnakeBody;
 	PGAME_COORD lpFood;
@@ -322,9 +322,9 @@ void GamePaint(HWND hwnd)
 	// 画了一个方框。演示LineTo函数
 	LineTo(hdcmem, rectBoundary.left, rectBoundary.bottom);
 	LineTo(hdcmem, rectBoundary.right, rectBoundary.bottom);
-
 	LineTo(hdcmem, rectBoundary.right, rectBoundary.top);
 	LineTo(hdcmem, rectBoundary.left, rectBoundary.top);
+
 	/*******************************************************************************
 	* #############  写一行字  ################
 	*

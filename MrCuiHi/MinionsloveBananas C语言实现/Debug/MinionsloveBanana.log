@@ -1,0 +1,14 @@
+﻿  stdafx.c
+  Base.c
+\\mac\home\github\summer_semester\mrcuihi\minionslovebananas\base.c(46): warning C4100: “Direction”: 未引用的形参
+  Man.c
+  MainWindow.c
+\\mac\home\github\summer_semester\mrcuihi\minionslovebananas\mainwindow.c(224): warning C4133: “函数”: 从“char [41]”到“LPCWSTR”的类型不兼容
+\\mac\home\github\summer_semester\mrcuihi\minionslovebananas\mainwindow.c(226): warning C4133: “函数”: 从“char [13]”到“LPCWSTR”的类型不兼容
+\\mac\home\github\summer_semester\mrcuihi\minionslovebananas\mainwindow.c(230): warning C4133: “函数”: 从“char [13]”到“LPCWSTR”的类型不兼容
+\\mac\home\github\summer_semester\mrcuihi\minionslovebananas\mainwindow.c(232): warning C4133: “函数”: 从“char [12]”到“LPCWSTR”的类型不兼容
+  GameBoard.c
+  Box.c
+  正在生成代码...
+  MinionsloveBanana.vcxproj -> \\Mac\Home\github\summer_semester\MrCuiHi\MinionsloveBananas\Debug\MinionsloveBanana.exe
+  MinionsloveBanana.vcxproj -> \\Mac\Home\github\summer_semester\MrCuiHi\MinionsloveBananas\Debug\MinionsloveBanana.pdb (Full PDB)
